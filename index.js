@@ -19,7 +19,7 @@ function generateOTP() {
 
 // Firebase function to send OTP
 exports.sendOtp = functions.https.onRequest(async (req, res) => {
-  const { email } = req.body;
+  const { email, message } = req.body;
 
   if (!email) {
     return res.status(400).send({ success: false, message: "Email is required" });
@@ -30,7 +30,7 @@ exports.sendOtp = functions.https.onRequest(async (req, res) => {
   const mailOptions = {
     from: process.env.GMAIL_EMAIL,
     to: email,
-    subject: "Your OTP Code",
+    subject: message,
     text: `Your OTP code is: ${otp}. It will expire in 10 minutes.`
   };
 
